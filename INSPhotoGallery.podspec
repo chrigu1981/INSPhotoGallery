@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'INSPhotoGallery'
-  s.version  = '1.3.0'
+  s.version  = '1.3.2'
   s.license  = 'Apache License, Version 2.0'
   s.summary  = 'INSPhotoGallery is a modern looking photo gallery written in Swift for iOS.'
   s.homepage = 'https://github.com/chrigu1981/INSPhotoGallery'
@@ -11,6 +11,6 @@ Pod::Spec.new do |s|
   s.ios.resource_bundle = { s.name => ['INSPhotoGallery/INSPhotoGallery.bundle/*'] }
   s.source_files = 'INSPhotoGallery/**/*.{h,m,swift}'
 
-  s.platform = :ios, '8.0'
+  s.platform = :ios, '11.0'
   s.frameworks = 'UIKit', 'Foundation'
 end

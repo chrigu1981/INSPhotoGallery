@@ -20,14 +20,14 @@
 import UIKit
 import PDFKit
 private func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
-  switch (lhs, rhs) {
-  case let (l?, r?):
-    return l < r
-  case (nil, _?):
-    return true
-  default:
-    return false
-  }
+    switch (lhs, rhs) {
+    case let (l?, r?):
+        return l < r
+    case (nil, _?):
+        return true
+    default:
+        return false
+    }
 }
 
 class INSScalingImageView: UIScrollView {
@@ -44,9 +44,9 @@ class INSScalingImageView: UIScrollView {
     var image: Any? {
         didSet {
             switch image {
-                case is UIImage: updateImage(image as? UIImage)
-                case is PDFDocument: updatePDFView(image as? PDFDocument)
-                default: ()
+            case is UIImage: updateImage(image as? UIImage)
+            case is PDFDocument: updatePDFView(image as? PDFDocument)
+            default: ()
             }
         }
     }
@@ -63,7 +63,7 @@ class INSScalingImageView: UIScrollView {
         setupImageScrollView()
         updateZoomScale()
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupImageScrollView()
@@ -132,7 +132,17 @@ class INSScalingImageView: UIScrollView {
             imageView.removeFromSuperview()
         }
         
+        pdfView.autoresizesSubviews = true
+        pdfView.autoresizingMask = [.flexibleWidth, .flexibleHeight, .flexibleTopMargin, .flexibleLeftMargin]
+        pdfView.displayDirection = .vertical
+        
+        pdfView.autoScales = true
+        pdfView.displayMode = .singlePageContinuous
+        pdfView.displaysPageBreaks = true
         pdfView.document = document
+        
+        pdfView.maxScaleFactor = 4.0
+        pdfView.minScaleFactor = pdfView.scaleFactorForSizeToFit
     }
     
     private func updateZoomScale() {
@@ -146,7 +156,7 @@ class INSScalingImageView: UIScrollView {
             self.maximumZoomScale = max(minimumScale, self.maximumZoomScale)
             
             self.zoomScale = minimumZoomScale
-
+            
             // scrollView.panGestureRecognizer.enabled is on by default and enabled by
             // viewWillLayoutSubviews in the container controller so disable it here
             // to prevent an interference with the container controller's pan gesture.

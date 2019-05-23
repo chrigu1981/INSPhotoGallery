@@ -74,21 +74,21 @@ open class INSPhotoViewController: UIViewController, UIScrollViewDelegate {
         view.addGestureRecognizer(doubleTapGestureRecognizer)
         view.addGestureRecognizer(longPressGestureRecognizer)
         
-        if let image = photo.image {
+        if let document = photo.document {
+            self.scalingImageView.image = document
+            self.activityIndicator.stopAnimating()
+            loadDocument()
+        } else if let image = photo.image {
             self.scalingImageView.image = image
             self.activityIndicator.stopAnimating()
         } else if let thumbnailImage = photo.thumbnailImage {
             self.scalingImageView.image = thumbnailImage
             self.activityIndicator.stopAnimating()
             loadFullSizeImage()
-        } else if let document = photo.document {
-            self.scalingImageView.image = document
-            self.activityIndicator.stopAnimating()
-            loadDocument()
         } else {
             loadThumbnailImage()
         }
-
+        
     }
     
     open override func viewWillLayoutSubviews() {
@@ -123,7 +123,7 @@ open class INSPhotoViewController: UIViewController, UIScrollViewDelegate {
         self.photo.loadImageWithCompletionHandler({ [weak self] (image, error) -> () in
             let completeLoading = {
                 self?.activityIndicator.stopAnimating()
-                self?.scalingImageView.image = image    
+                self?.scalingImageView.image = image
             }
             
             if Thread.isMainThread {
